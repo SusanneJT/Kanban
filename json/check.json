@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "anvandarnamn": "karin",
+        "losenord": "1234"
+    },{
+        "id": 2,
+        "anvandarnamn": "susanne",
+        "losenord": "1234"
+    },{
+        "id": 3,
+        "anvandarnamn": "daniel",
+        "losenord": "1234"
+    },{
+        "id": 4,
+        "anvandarnamn": "fred",
+        "losenord": "1234"
+    },{
+        "id": 5,
+        "anvandarnamn": "janne",
+        "losenord": "1234"
+    }
+]
