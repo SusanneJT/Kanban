@@ -58,3 +58,60 @@ loginBtn.addEventListener("click", function(){
         console.log(err);
     });
 });
+// anrop av funktion som skapar kort
+// SkapaKort();
+
+// //Funktion för att skapa formulär
+// function SkapaKort() {
+//     //Skapar div-element att fästas på befintlig html
+//     console.log("här byggs formuläret");
+//     var divContainer = document.getElementById("container");
+//     var kortInfo = document.createElement('div');
+//     kortInfo.setAttribute('id', 'idContainer');
+//     divContainer.appendChild(kortInfo);
+
+//     //Skapar formulär för kort
+//     var kortForm = document.createElement('FORM');
+//     kortForm.setAttribute('id', 'idForm');
+//     kortInfo.appendChild(kortForm); 
+
+//     //Skapar input för kort
+//     var kortText = document.createElement('TEXTAREA');
+//     kortText.setAttribute('id', 'idKort');
+//     kortText.setAttribute('rows', '10');
+//     kortForm.appendChild(kortText);
+    
+//     //Skapar spara-knapp
+//     let btnSpara = document.createElement('BUTTON');
+//     btnSpara.setAttribute('id', 'btnSpara');
+//     btnSpara.innerHTML = 'Spara kort'; 
+//     kortForm.appendChild(btnSpara);
+
+//     //Skapar händelsehanterare för spara-knapp
+//     btnSpara.addEventListener('click', function() { 
+//         // lägg post i kort.json
+
+//         // hämta kategori från anropande funktion ???
+
+//         // hämta kortets text från skärmen
+//         var korttext = document.getElementById("idKort");
+
+//         // skapa kortdata av text från skärmen
+//         var kortPost = '{"kategori":"' + "1" + '"';
+//         //var kortPost = '{"kategori":"' + idkort + '"';
+//         kortPost += ', "korttext":"' + korttext + '"}';
+//         console.log("färdigt för utskrift: ");
+//         console.log(kortPost);
+//     });
+
+//     //Skapar avsluta-knapp
+//     let btnAvsluta = document.createElement('BUTTON');
+//     btnAvsluta.setAttribute('id', 'btnAvsluta');
+//     btnAvsluta.innerHTML = 'Avsluta'; 
+//     kortForm.appendChild(btnAvsluta);
+
+//     //Skapar händelsehanterare för avsluta-knapp
+//     btnAvsluta.addEventListener('click', function() { 
+//         kortInfo.removeChild(kortForm); 
+//     });
+// }
