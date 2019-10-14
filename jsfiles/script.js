@@ -1,39 +1,9 @@
 // -------------------------------------------------------------------------------
 // här börjar kod för inloggning
 
-var loginForm = document.getElementById("main");
-
-// skapar div för login form
-let divLogin = document.createElement("div");
-divLogin.setAttribute("id", "login-div");
-loginForm.appendChild(divLogin);
-
-// skapar input för användarnamn
-let aNamn = document.createElement("input");
-aNamn.setAttribute("type", "text");
-aNamn.setAttribute("id", "a-namn");
-aNamn.setAttribute("placeholder", "Användarnamn");
-aNamn.setAttribute("autocomplete", "on");
-divLogin.appendChild(aNamn);
-
-// skapar input för lösenord
-let losen = document.createElement("input");
-losen.setAttribute("type", "password");
-losen.setAttribute("id", "losen-ord");
-losen.setAttribute("placeholder", "Lösenord");
-divLogin.appendChild(losen);
-
-// skapar login knapp
-let loginBtn = document.createElement("button");
-loginBtn.setAttribute("id", "login-knapp");
-loginBtn.innerHTML = "Logga in";
-divLogin.appendChild(loginBtn);
-
-// skapar funktion för login knappen
-loginBtn.addEventListener("click", function(){
+function inLog(){
     let aNamn = document.getElementById("a-namn").value;
     let losen = document.getElementById("losen-ord").value;
-    //let checkInlog = [];
 
     fetch("json/check.json")
     .then(function(resp) {
@@ -48,10 +18,10 @@ loginBtn.addEventListener("click", function(){
         for (x in checkInlog){
             // kollar om användarnamn och lösen stämmer i json
             if(checkInlog.some(item => item.anvandarnamn === aNamn) && checkInlog.some(item => item.losenord === losen)){
-                document.getElementById("mess-inlog").innerHTML = "Inloggad";
-                SkapaKort();
+                window.location.href = "kanban.html";
+                //SkapaKort();
             }else {
-                document.getElementById("mess-inlog").innerHTML = "Fel";
+                document.getElementById("mess-inlog").innerHTML = "Fel användarnamn eller lösenord!";
             }
         }
     })
@@ -60,15 +30,17 @@ loginBtn.addEventListener("click", function(){
         document.write(err);
         console.log(err);
     });
-});
+}
 
 // -------------------------------------------------------------------------------
 // här börjar kod för hantering av kort
 
 //NyttKort();
+/*
 AendraKortText("4","Denna text skickades med", 0);
 
 //Funktion för att skapa nytt kort
+
 function NyttKort(kategori) {
 
     console.log("inne i NyttKort-funktionen");
@@ -190,8 +162,9 @@ function SkrivFil() {
     fetch ("json/kort.json", {
         method: 'POST', 
         headers: {
-         //   'Accept':'application/json, text/plain, */*',
+         //   'Accept':'application/json, text/plain, ',
             'Content-Type':'application/json'
+            
         }, 
         body:JSON.stringify({
             kategori:"kategoritext", korttext:"testtext i ftech"})
@@ -206,4 +179,4 @@ function SkrivFil() {
     .catch(function(staderror) {
         console.log("fel vid skapande av kort");
     });
-}
+}*/
