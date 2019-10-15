@@ -1,4 +1,10 @@
 // -------------------------------------------------------------------------------
+// Här kollar den om man är inloggad
+if(window.location.href === "https://susannejt.github.io/Kanban/kanban.html"){
+    if(localStorage.getItem("inloggad") === null){
+        window.location.href = "index.html";
+    }
+}
 // här börjar kod för inloggning
 
 function inLog(){
@@ -30,6 +36,11 @@ function inLog(){
         document.write(err);
         console.log(err);
     });
+}
+// funktion för att logga ut
+function utLog(){
+    localStorage.removeItem("inloggad");
+    window.location.href = "index.html";
 }
 
 // -------------------------------------------------------------------------------
