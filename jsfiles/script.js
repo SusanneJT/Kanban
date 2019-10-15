@@ -1,4 +1,10 @@
 // -------------------------------------------------------------------------------
+// Här kollar den om man är inloggad
+if(window.location.href === "https://susannejt.github.io/Kanban/kanban.html"){
+    if(localStorage.getItem("inloggad") === null){
+        window.location.href = "index.html";
+    }
+}
 // här börjar kod för inloggning
 
 function inLog(){
@@ -18,6 +24,7 @@ function inLog(){
         for (x in checkInlog){
             // kollar om användarnamn och lösen stämmer i json
             if(checkInlog.some(item => item.anvandarnamn === aNamn) && checkInlog.some(item => item.losenord === losen)){
+                localStorage.setItem("inloggad", true);
                 window.location.href = "kanban.html";
                 //SkapaKort();
             }else {
@@ -30,6 +37,11 @@ function inLog(){
         document.write(err);
         console.log(err);
     });
+}
+// funktion för att logga ut
+function utLog(){
+    localStorage.removeItem("inloggad");
+    window.location.href = "index.html";
 }
 
 // -------------------------------------------------------------------------------
