@@ -35,8 +35,6 @@ function inLog(){
 // -------------------------------------------------------------------------------
 // här börjar kod för hantering av kort
 
-
-
 // Funktion som kollar av vad som finns i local storage anropas
 kollaLocalStorage();
 
@@ -44,6 +42,7 @@ kollaLocalStorage();
 //Funktionen går igenom localstorage och skapar kort
 function kollaLocalStorage() {
 
+    
     //Innehåll från "lskort" i localstorage hämtas
     var hamtaLocalStorage = localStorage.getItem("lsKort");
     
@@ -65,15 +64,14 @@ function kollaLocalStorage() {
             visaKort(kort[i].kolumnNamn, kort[i].kortId, kort[i].text);
         }
     }
-}
+}    
     
     
-    
-//Denna funktion anropas när någon trycker på knappen 'skapa kort', den valda kolumnen bifogas som parameter
-function skapaKort(kolumnId) {
-    
+//Denna funktion anropas när någon trycker på knappen 'skapa kort', 
+//den valda kolumnen bifogas som parameter tillsammans med buttonid
+function skapaKort(kolumnId, btnId) {
+
     // Div-element att fästas i vald kolumn
-    //var kolumnContainer = document.getElementById("kolumnId");
     var divForkortForm = document.createElement('div');
     divForkortForm.setAttribute('id', 'divForkortForm');
     document.getElementById(kolumnId).appendChild(divForkortForm);
@@ -95,7 +93,10 @@ function skapaKort(kolumnId) {
     btnAngra.setAttribute('id', 'btnAngra');
     btnAngra.innerHTML = 'Ångra'; 
     divForkortForm.appendChild(btnAngra);
-
+    
+    // "Lägg till kort"-knappen sätts ur funktion medan formuläret finns 
+    var knappStopp = document.getElementById(btnId);
+    knappStopp.style.display = "none";
 
     // Händelsehanterare för spara-knapp
     btnSpara.addEventListener('click', function() { 
@@ -105,6 +106,9 @@ function skapaKort(kolumnId) {
 
         //Tar bort div med "formulär"
         document.getElementById(kolumnId).removeChild(divForkortForm); 
+
+        // "lägg till kort" tillåts igen
+        knappStopp.style.display = "initial";
 
         //Innehållet från localstorage hämtas och görs om till array
         var hamtaLocalStorage = localStorage.getItem("lsKort");
@@ -137,8 +141,12 @@ function skapaKort(kolumnId) {
 
     // Händelsehanterare för Ångra-knapp
     btnAngra.addEventListener('click', function() { 
+
         //Tar bort div med "formulär"
         document.getElementById(kolumnId).removeChild(divForkortForm); 
+        
+        // "lägg till kort" tillåts igen
+        knappStopp.style.display = "initial";
     });
 }
 
@@ -149,7 +157,6 @@ function visaKort(kolumnId, kortId, kortText) {
     var divId = "divForKort" + kortId;
 
     // Div-element att fästas i vald kolumn
-    //var kolumnContainer = document.getElementById("kolumnId");
     var divForkort = document.createElement('div');
     divForkort.setAttribute('id', divId);
     document.getElementById(kolumnId).appendChild(divForkort);
