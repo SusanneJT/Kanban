@@ -24,6 +24,7 @@ function inLog(){
         for (x in checkInlog){
             // kollar om användarnamn och lösen stämmer i json
             if(checkInlog.some(item => item.anvandarnamn === aNamn) && checkInlog.some(item => item.losenord === losen)){
+                localStorage.setItem("inloggad", true);
                 window.location.href = "kanban.html";
                 //SkapaKort();
             }else {
