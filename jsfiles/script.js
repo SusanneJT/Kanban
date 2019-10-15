@@ -162,11 +162,14 @@ function skapaKort(kolumnId, btnId) {
     });
 }
 
-
+//Denna funktion skapar själva kortet
 function visaKort(kolumnId, kortId, kortText) {
 
     //Ett unikt id för divven skapas med "kortId"
     var divId = "divForKort" + kortId;
+
+    //Ett unikt id för paragrafen skapas med "kortId"
+    var paraId = "paragraf" + kortId;
 
     // Div-element att fästas i vald kolumn
     var divForkort = document.createElement('div');
@@ -175,7 +178,75 @@ function visaKort(kolumnId, kortId, kortText) {
 
     //Paragraf skapas i den nyskapade divven
     let paragraf = document.createElement('p'); 
-    paragraf.setAttribute('id', 'paragraf');
+    paragraf.setAttribute('id', paraId);
     paragraf.innerHTML =  kortText; 
     divForkort.appendChild(paragraf); 
+
+    paragraf.addEventListener('click', function() { 
+        andraKort(kortId);
+    });
+}
+
+//När någon trycker på paragrafen i ett kort anropas denna funktion för ändring
+function andraKort(kortId) {
+    
+    //Divnamn för valt kort lagras till divNamn
+    var divNamn = "divForKort" + kortId;
+
+    //Paragraf-id i valt kort lagras till paragrafId
+    var paragrafID = "paragraf" + kortId;
+
+    // Skapar textarea i vald div för att kunna ändra
+    var kortText = document.createElement('TEXTAREA');
+    kortText.setAttribute('id', 'idKort');
+    kortText.setAttribute('rows', '10');
+    document.getElementById(divNamn).appendChild(kortText);  
+
+    //Den gamla texten hämtas med hjälp av id från p och läggs in i ändringsrutan
+    kortText.value = document.getElementById(paragrafID).innerHTML;    
+
+    //Gamla paragrafen döljs
+    document.getElementById(paragrafID).hidden = true; 
+
+    // Spara ändringar knapp
+    var btnSparaAndringar = document.createElement('BUTTON');
+    btnSparaAndringar.setAttribute('id', 'btnSparaAndringar');
+    btnSparaAndringar.innerHTML = 'Spara ändringar'; 
+    document.getElementById(divNamn).appendChild(btnSparaAndringar);
+
+    // Händelsehanterare för Ångra-knapp
+    btnSparaAndringar.addEventListener('click', function() { 
+        
+      
+        document.getElementById(divNamn).removeChild(idKort);
+        document.getElementById(divNamn).removeChild(btnSparaAndringar); 
+
+        //Texten som användaren skrivit in lagras 
+        var textIKort = kortText.value;
+        
+        //Innehållet från localstorage hämtas och görs om till array
+        var hamtaLocalStorage = localStorage.getItem("lsKort");
+        var hamtadeKort = JSON.parse(hamtaLocalStorage );
+        
+        //kort lagrar alla kort tillfälligt
+        var kort = [];
+        
+        //'hämtade' kort sparas till arrayn kort
+        for (i=0; i<hamtadeKort.length; i++) {
+        
+            if (hamtadeKort[i].kortId === kortId) {
+                hamtadeKort[i].text = textIKort;
+            } 
+            kort[i] = hamtadeKort[i]
+        }
+
+        //Hela arrayn kort lagras om till local storage
+        localStorage.setItem("lsKort", JSON.stringify(kort));
+        
+        //Den existerande paragrafen ändras och visas igen
+        document.getElementById(paragrafID).innerHTML = textIKort;
+        document.getElementById(paragrafID).hidden = false; 
+
+    });
+
 }
