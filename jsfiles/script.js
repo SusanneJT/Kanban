@@ -180,12 +180,41 @@ function visaKort(kolumnId, kortId, kortText) {
     let paragraf = document.createElement('p'); 
     paragraf.setAttribute('id', paraId);
     paragraf.innerHTML =  kortText; 
-    divForkort.appendChild(paragraf); 
+    divForkort.appendChild(paragraf);
 
-    paragraf.addEventListener('click', function() { 
+   // lagt till för att dra kort och gör så att paragrafen får .card
+    divForkort.classList.add("card");
+    divForkort.setAttribute("id", drag);
+    divForkort.setAttribute("draggable", true);
+    divForkort.addEventListener('dragstart', function(e) {
+          drag(event);   
+    })
+ 
+    
+   
+ paragraf.addEventListener('click', function() { 
         andraKort(kortId);
     });
 }
+
+   // flytta kort function
+
+   function allowDrop(ev) {
+    ev.preventDefault();
+  }
+  
+  function drag(ev) {
+    ev.dataTransfer.setData("text", ev.target.id);
+   
+  }
+  
+  function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+    ev.target.appendChild(document.getElementById(data));
+  }
+
+
 
 //När någon trycker på paragrafen i ett kort anropas denna funktion för ändring
 function andraKort(kortId) {
