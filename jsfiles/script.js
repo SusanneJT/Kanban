@@ -77,7 +77,7 @@ function kollaLocalStorage() {
         }
     }
 }    
-    
+     
     
 //Denna funktion anropas när någon trycker på knappen 'skapa kort', 
 //den valda kolumnen bifogas som parameter tillsammans med buttonid
@@ -106,9 +106,9 @@ function skapaKort(kolumnId, btnId) {
     btnAngra.innerHTML = 'Ångra'; 
     divForkortForm.appendChild(btnAngra);
     
-    // "Lägg till kort"-knappen sätts ur funktion medan formuläret finns 
-    var knappStopp = document.getElementById(btnId);
-    knappStopp.style.display = "none";
+    // "Lägg till kort"-knapparna sätts ur funktion medan 
+    // redigerbart formulär finns öppet
+    BtnDisabled('ja');
 
     // Händelsehanterare för spara-knapp
     btnSpara.addEventListener('click', function() { 
@@ -120,7 +120,7 @@ function skapaKort(kolumnId, btnId) {
         document.getElementById(kolumnId).removeChild(divForkortForm); 
 
         // "lägg till kort" tillåts igen
-        knappStopp.style.display = "initial";
+        BtnDisabled('nej');
 
         //Innehållet från localstorage hämtas och görs om till array
         var hamtaLocalStorage = localStorage.getItem("lsKort");
@@ -158,7 +158,7 @@ function skapaKort(kolumnId, btnId) {
         document.getElementById(kolumnId).removeChild(divForkortForm); 
         
         // "lägg till kort" tillåts igen
-        knappStopp.style.display = "initial";
+        BtnDisabled('nej');
     });
 }
 
@@ -215,10 +215,13 @@ function visaKort(kolumnId, kortId, kortText) {
     ev.target.appendChild(document.getElementById(data));
   }
 
-
-
-//När någon trycker på paragrafen i ett kort anropas denna funktion för ändring
+//När någon klickar på ett kort anropas denna funktion för ändring
 function andraKort(kortId) {
+
+    // om annat formulär finns öppet ska inte ändrings-signalen fångas upp
+    if (document.getElementsByClassName("btnDisabled")[0].disabled === true) {
+        return;
+    }
     
     //Divnamn för valt kort lagras till divNamn
     var divNamn = "divForKort" + kortId;
@@ -244,12 +247,24 @@ function andraKort(kortId) {
     btnSparaAndringar.innerHTML = 'Spara ändringar'; 
     document.getElementById(divNamn).appendChild(btnSparaAndringar);
 
-    // Händelsehanterare för Ångra-knapp
-    btnSparaAndringar.addEventListener('click', function() { 
+    // Ångra ändringar knapp
+    var btnAngraAndringar = document.createElement('BUTTON');
+    btnAngraAndringar.setAttribute('id', 'btnAngraAndringar');
+    btnAngraAndringar.innerHTML = 'Ångra ändringar'; 
+    document.getElementById(divNamn).appendChild(btnAngraAndringar);
+  
         
-      
+    // "Lägg till kort"-knapparna sätts ur funktion medan 
+    // redigerbart formulär finns öppet
+    BtnDisabled('ja');
+
+    // Händelsehanterare för Spara ändringar-knapp
+    btnSparaAndringar.addEventListener('click', function() { 
+              
+        // ta bort formulär för ändring
         document.getElementById(divNamn).removeChild(idKort);
         document.getElementById(divNamn).removeChild(btnSparaAndringar); 
+        document.getElementById(divNamn).removeChild(btnAngraAndringar); 
 
         //Texten som användaren skrivit in lagras 
         var textIKort = kortText.value;
@@ -276,7 +291,44 @@ function andraKort(kortId) {
         //Den existerande paragrafen ändras och visas igen
         document.getElementById(paragrafID).innerHTML = textIKort;
         document.getElementById(paragrafID).hidden = false; 
-
+    
+        // "lägg till kort" tillåts igen
+        BtnDisabled('nej');
     });
+    
+    // Händelsehanterare för Ångra ändringar-knapp
+    btnAngraAndringar.addEventListener('click', function() { 
+
+        // ta bort formulär för ändring
+        document.getElementById(divNamn).removeChild(idKort);
+        document.getElementById(divNamn).removeChild(btnSparaAndringar); 
+        document.getElementById(divNamn).removeChild(btnAngraAndringar); 
+      
+        //Den ursprungliga paragrafen visas igen
+        document.getElementById(paragrafID).hidden = false; 
+        
+        // "lägg till kort" tillåts igen
+        BtnDisabled('nej');
+    });
+}
+
+
+// funktion för att spärra vissa knappar medan ett formulär är öppet
+// när forumläret är färdigbehandlat kan knapparna öppnas igen
+// variabeln 'paragraf' kommer in med värde 'ja' eller 'nej'
+function BtnDisabled(paragraf) {
+
+    console.log("paragraf = " + paragraf);
+    if (paragraf === 'ja') {
+        document.getElementsByClassName("btnDisabled")[0].disabled = true;
+        document.getElementsByClassName("btnDisabled")[1].disabled = true;
+        document.getElementsByClassName("btnDisabled")[2].disabled = true;
+        document.getElementsByClassName("btnDisabled")[3].disabled = true;
+    } else {
+        document.getElementsByClassName("btnDisabled")[0].disabled = false;
+        document.getElementsByClassName("btnDisabled")[1].disabled = false;
+        document.getElementsByClassName("btnDisabled")[2].disabled = false;
+        document.getElementsByClassName("btnDisabled")[3].disabled = false;
+    }
 
 }
