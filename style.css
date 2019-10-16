@@ -37,8 +37,13 @@ body .kolumn{
 .btn{
    float:right;
    margin:8px;
-   
-   
+ 
+}
+#btn-logout{
+    
+    position: absolute;
+    top:25px;
+    right:10px;
 }
 #paragraf{
     width:100px;

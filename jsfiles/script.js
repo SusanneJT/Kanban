@@ -183,15 +183,15 @@ function visaKort(kolumnId, kortId, kortText) {
     divForkort.appendChild(paragraf);
 
    // lagt till för att dra kort och gör så att paragrafen får .card
-    divForkort.classList.add("card");
-    divForkort.setAttribute("id", drag);
+    paragraf.classList.add("card");
     divForkort.setAttribute("draggable", true);
     divForkort.addEventListener('dragstart', function(e) {
-          drag(event);   
+
+        drag(event);   
+    
     })
  
     
-   
  paragraf.addEventListener('click', function() { 
         andraKort(kortId);
     });
@@ -201,6 +201,7 @@ function visaKort(kolumnId, kortId, kortText) {
 
    function allowDrop(ev) {
     ev.preventDefault();
+   
   }
   
   function drag(ev) {
