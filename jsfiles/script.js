@@ -1,43 +1,11 @@
 // -------------------------------------------------------------------------------
-// Här kollar den om man är inloggad
+// En liten check så man inte kan gå in via kanban.html utan att vara inloggad
 if(window.location.href === "https://susannejt.github.io/Kanban/kanban.html"){
     if(localStorage.getItem("inloggad") === null){
         window.location.href = "index.html";
     }
 }
-// här börjar kod för inloggning
 
-function inLog(){
-    let aNamn = document.getElementById("a-namn").value;
-    let losen = document.getElementById("losen-ord").value;
-
-    fetch("json/check.json")
-    .then(function(resp) {
-        return resp.json();
-    })
-
-    .then(function(data) {
-        // lägger datan från json i variabel
-        checkInlog = data;
-        
-        // loopar genom json filen
-        for (x in checkInlog){
-            // kollar om användarnamn och lösen stämmer i json
-            if(checkInlog.some(item => item.anvandarnamn === aNamn) && checkInlog.some(item => item.losenord === losen)){
-                localStorage.setItem("inloggad", true);
-                window.location.href = "kanban.html";
-                //SkapaKort();
-            }else {
-                document.getElementById("mess-inlog").innerHTML = "Fel användarnamn eller lösenord!";
-            }
-        }
-    })
-
-    .catch(err => {
-        document.write(err);
-        console.log(err);
-    });
-}
 // funktion för att logga ut
 function utLog(){
     localStorage.removeItem("inloggad");
@@ -54,7 +22,6 @@ kollaLocalStorage();
 //Funktionen går igenom localstorage och skapar kort
 function kollaLocalStorage() {
 
-    
     //Innehåll från "lskort" i localstorage hämtas
     var hamtaLocalStorage = localStorage.getItem("lsKort");
     
@@ -77,11 +44,10 @@ function kollaLocalStorage() {
         }
     }
 }    
-     
     
 //Denna funktion anropas när någon trycker på knappen 'skapa kort', 
 //den valda kolumnen bifogas som parameter tillsammans med buttonid
-function skapaKort(kolumnId, btnId) {
+function skapaKort(kolumnId) {
 
     // Div-element att fästas i vald kolumn
     var divForkortForm = document.createElement('div');
@@ -190,8 +156,7 @@ function visaKort(kolumnId, kortId, kortText) {
         drag(event);   
     
     })
- 
-    
+  
  paragraf.addEventListener('click', function() { 
         andraKort(kortId);
     });
@@ -206,7 +171,6 @@ function visaKort(kolumnId, kortId, kortText) {
   
   function drag(ev) {
     ev.dataTransfer.setData("text", ev.target.id);
-   
   }
   
   function drop(ev) {
@@ -311,7 +275,6 @@ function andraKort(kortId) {
         BtnDisabled('nej');
     });
 }
-
 
 // funktion för att spärra vissa knappar medan ett formulär är öppet
 // när forumläret är färdigbehandlat kan knapparna öppnas igen
