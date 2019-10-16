@@ -177,6 +177,7 @@ function visaKort(kolumnId, kortId, kortText) {
     ev.preventDefault();
     var data = ev.dataTransfer.getData("text");
     ev.target.appendChild(document.getElementById(data));
+    sparaFlytt(ev.target.id, data);
   }
 
 //När någon klickar på ett kort anropas denna funktion för ändring
@@ -294,4 +295,29 @@ function BtnDisabled(paragraf) {
         document.getElementsByClassName("btnDisabled")[3].disabled = false;
     }
 
+}
+
+function sparaFlytt(targetId, data) {
+    //Innehållet från localstorage hämtas och görs om till array
+    var hamtaLocalStorage = localStorage.getItem("lsKort");
+    var hamtadeKort = JSON.parse(hamtaLocalStorage );
+    
+    //kort lagrar alla kort tillfälligt
+    var kort = [];
+    
+    var hittaDiv = [];
+    
+
+    //'hämtade' kort sparas till arrayn kort
+    for (i=0; i<hamtadeKort.length; i++) {
+
+        hittaDiv[i] = "divForKort" + hamtadeKort[i].kortId
+        if (hittaDiv[i] === data && targetId != "") {
+            hamtadeKort[i].kolumnNamn = targetId;
+        } 
+        kort[i] = hamtadeKort[i]
+    }
+
+    //Hela arrayn kort lagras om till local storage
+    localStorage.setItem("lsKort", JSON.stringify(kort));
 }
