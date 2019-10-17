@@ -1,8 +1,5 @@
 /*----- Formulär index.html------ */
 
-
-
-
 input {
     padding: 6px !important;
     margin-top: 10px !important;
@@ -44,6 +41,7 @@ body .kolumn{
     background: #f1f1f1;
     margin:30px 10px;
     border-radius: 5px;
+    position: relative;
 }
 #main{
     margin: 30px 20px;
@@ -53,6 +51,9 @@ body .kolumn{
 .btn{
    float:right;
    margin:8px;
+   position: absolute;
+   top:0;
+   right:0;
  
 }
 #btn-logout{
