@@ -297,23 +297,29 @@ function BtnDisabled(paragraf) {
 
 }
 
-function sparaFlytt(targetId, data) {
+//Sparar flytt av kort till localstorage
+function sparaFlytt(targetKolumn, kortNamn) {
+
     //Innehållet från localstorage hämtas och görs om till array
     var hamtaLocalStorage = localStorage.getItem("lsKort");
     var hamtadeKort = JSON.parse(hamtaLocalStorage );
     
-    //kort lagrar alla kort tillfälligt
+    //kort lagrar alla kort från ls tillfälligt
     var kort = [];
-    
-    var hittaDiv = [];
-    
+    //HittaKort får ett värde som ska jämföras mot det flyttade kortet
+    var hittaKort = [];
 
-    //'hämtade' kort sparas till arrayn kort
     for (i=0; i<hamtadeKort.length; i++) {
-
-        hittaDiv[i] = "divForKort" + hamtadeKort[i].kortId
-        if (hittaDiv[i] === data && targetId != "") {
-            hamtadeKort[i].kolumnNamn = targetId;
+       
+        //Kollar om det finns en "target-kolumn efter flytten"
+        var check = targetKolumn.startsWith("kolumn");
+         //HittaKort får ett värde som ska jämföras mot det flyttade kortet
+        hittaKort[i] = "divForKort" + hamtadeKort[i].kortId
+       
+        //Om hittade kortet är det flyttade kortet och har en giltig target-kolumn
+        if (hittaKort[i] === kortNamn && check === true) {
+            //Kolumn-namnet byts på det hittade kortet
+            hamtadeKort[i].kolumnNamn = targetKolumn;
         } 
         kort[i] = hamtadeKort[i]
     }
