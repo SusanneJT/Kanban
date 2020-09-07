@@ -19,5 +19,9 @@
         "id": 5,
         "anvandarnamn": "janne",
         "losenord": "1234"
+    },{
+        "id": 6,
+        "anvandarnamn": "test",
+        "losenord": "1234"
     }
 ]
